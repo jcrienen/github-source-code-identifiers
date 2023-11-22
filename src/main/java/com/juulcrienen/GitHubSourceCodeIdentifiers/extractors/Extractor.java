@@ -4,8 +4,7 @@ import ai.serenade.treesitter.Parser;
 import ai.serenade.treesitter.Tree;
 import ai.serenade.treesitter.TreeCursor;
 import ai.serenade.treesitter.TreeCursorNode;
-import com.juulcrienen.GitHubSourceCodeIdentifiers.models.ClassFile;
-import org.eclipse.jgit.util.IO;
+import com.juulcrienen.GitHubSourceCodeIdentifiers.models.SourceFile;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -13,7 +12,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Extractor<T extends ClassFile> {
+public abstract class Extractor<T extends SourceFile> {
     private final Parser fileParser;
     private final long language;
     public Extractor(long language) {
@@ -67,7 +66,7 @@ public abstract class Extractor<T extends ClassFile> {
         TreeCursorNode current = cursor.getCurrentTreeCursorNode();
         String currentType = current.getType();
 
-        if(currentType.equals("identifier") && typeTrail != null) {
+        if(currentType.equals("identifier") && current.getName() != null && current.getName().equals("name") && typeTrail != null) {
             int start = current.getStartByte();
             int end = current.getEndByte();
             for (ExtractionType extractionType : type) {

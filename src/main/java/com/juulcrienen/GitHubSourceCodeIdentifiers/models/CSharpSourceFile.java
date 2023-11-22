@@ -2,9 +2,9 @@ package com.juulcrienen.GitHubSourceCodeIdentifiers.models;
 
 import java.io.File;
 
-public class CSharpClassFile extends ClassFile{
+public class CSharpSourceFile extends SourceFile {
 
-    public CSharpClassFile(File file) {
+    public CSharpSourceFile(File file) {
         super(file, ".cs");
     }
 

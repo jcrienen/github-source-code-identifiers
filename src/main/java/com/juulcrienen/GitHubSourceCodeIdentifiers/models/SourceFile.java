@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ClassFile {
+public abstract class SourceFile {
 
     private File file;
     protected List<String> methodNames;
@@ -12,7 +12,7 @@ public abstract class ClassFile {
     protected List<String> variableNames;
     protected List<String> classNames;
 
-    public ClassFile(File file, String extension) {
+    public SourceFile(File file, String extension) {
         if(!file.getPath().endsWith(extension)) throw new IllegalArgumentException("File does not have " + extension + " extension!");
         this.file = file;
         methodNames = new ArrayList<>();

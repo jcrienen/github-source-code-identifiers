@@ -2,9 +2,9 @@ package com.juulcrienen.GitHubSourceCodeIdentifiers.models;
 
 import java.io.File;
 
-public class JavaClassFile extends ClassFile {
+public class JavaSourceFile extends SourceFile {
 
-    public JavaClassFile(File file) {
+    public JavaSourceFile(File file) {
         super(file, ".java");
     }
 
