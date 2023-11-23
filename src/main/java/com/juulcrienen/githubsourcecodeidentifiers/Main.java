@@ -1,24 +1,9 @@
-package com.juulcrienen.GitHubSourceCodeIdentifiers;
+package com.juulcrienen.githubsourcecodeidentifiers;
 
-import ai.serenade.treesitter.Languages;
-import com.juulcrienen.GitHubSourceCodeIdentifiers.extractors.Extractor;
-import com.juulcrienen.GitHubSourceCodeIdentifiers.extractors.LanguageMapper;
-import com.juulcrienen.GitHubSourceCodeIdentifiers.models.SourceFile;
-import com.juulcrienen.githubapiwrapper.GitHubAPIWrapper;
-import com.juulcrienen.githubapiwrapper.helpers.FileHelper;
 import org.apache.commons.cli.*;
-import org.kohsuke.github.GHRepository;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Main {
 

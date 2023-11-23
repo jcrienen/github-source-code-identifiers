@@ -1,8 +1,8 @@
-package com.juulcrienen.GitHubSourceCodeIdentifiers;
+package com.juulcrienen.githubsourcecodeidentifiers;
 
-import com.juulcrienen.GitHubSourceCodeIdentifiers.extractors.Extractor;
-import com.juulcrienen.GitHubSourceCodeIdentifiers.extractors.LanguageMapper;
-import com.juulcrienen.GitHubSourceCodeIdentifiers.models.SourceFile;
+import com.juulcrienen.githubsourcecodeidentifiers.extractors.Extractor;
+import com.juulcrienen.githubsourcecodeidentifiers.extractors.LanguageMapper;
+import com.juulcrienen.githubsourcecodeidentifiers.models.SourceFile;
 import com.juulcrienen.githubapiwrapper.GitHubAPIWrapper;
 import com.juulcrienen.githubapiwrapper.helpers.FileHelper;
 import org.kohsuke.github.GHRepository;

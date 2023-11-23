@@ -1,4 +1,4 @@
-package com.juulcrienen.GitHubSourceCodeIdentifiers.extractors;
+package com.juulcrienen.githubsourcecodeidentifiers.extractors;
 
 import ai.serenade.treesitter.Languages;
 

@@ -1,4 +1,4 @@
-package com.juulcrienen.GitHubSourceCodeIdentifiers.extractors;
+package com.juulcrienen.githubsourcecodeidentifiers.extractors;
 
 public enum ExtractionType {
     GLOBAL_VARIABLES("(.*)field_declaration.variable_declarator|(.*)field_declaration.variable_declaration.variable_declarator"),

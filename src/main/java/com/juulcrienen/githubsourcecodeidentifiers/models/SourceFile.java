@@ -1,4 +1,4 @@
-package com.juulcrienen.GitHubSourceCodeIdentifiers.models;
+package com.juulcrienen.githubsourcecodeidentifiers.models;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;

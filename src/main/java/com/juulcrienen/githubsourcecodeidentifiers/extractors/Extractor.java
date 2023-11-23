@@ -1,11 +1,10 @@
-package com.juulcrienen.GitHubSourceCodeIdentifiers.extractors;
+package com.juulcrienen.githubsourcecodeidentifiers.extractors;
 
 import ai.serenade.treesitter.Parser;
 import ai.serenade.treesitter.Tree;
 import ai.serenade.treesitter.TreeCursor;
 import ai.serenade.treesitter.TreeCursorNode;
-import com.juulcrienen.GitHubSourceCodeIdentifiers.models.SourceFile;
-import com.juulcrienen.githubapiwrapper.GitHubAPIWrapper;
+import com.juulcrienen.githubsourcecodeidentifiers.models.SourceFile;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
