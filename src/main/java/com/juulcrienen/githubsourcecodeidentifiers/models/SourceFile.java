@@ -9,7 +9,8 @@ public class SourceFile {
 
     protected List<String> methodNames;
     protected List<String> parameterNames;
-    protected List<String> variableNames;
+    protected List<String> globalVariableNames;
+    protected List<String> localVariableNames;
     protected List<String> classNames;
 
     public SourceFile(File file, String extension) {
@@ -17,7 +18,8 @@ public class SourceFile {
         this.file = file;
         methodNames = new ArrayList<>();
         parameterNames = new ArrayList<>();
-        variableNames = new ArrayList<>();
+        globalVariableNames = new ArrayList<>();
+        localVariableNames = new ArrayList<>();
         classNames = new ArrayList<>();
     }
 
@@ -33,9 +35,11 @@ public class SourceFile {
         return parameterNames;
     }
 
-    public List<String> getVariableNames() {
-        return variableNames;
+    public List<String> getGlobalVariableNames() {
+        return globalVariableNames;
     }
+
+    public List<String> getLocalVariableNames() { return localVariableNames; }
 
     public List<String> getClassNames() { return classNames; }
 
@@ -43,7 +47,8 @@ public class SourceFile {
         List<String> result = new ArrayList<>();
         result.addAll(methodNames);
         result.addAll(parameterNames);
-        result.addAll(variableNames);
+        result.addAll(globalVariableNames);
+        result.addAll(localVariableNames);
         result.addAll(classNames);
         return result;
     }
@@ -54,8 +59,11 @@ public class SourceFile {
     public boolean addParameterName(String parameterName) {
         return parameterNames.add(parameterName);
     }
-    public boolean addVariableName(String variableName) {
-        return variableNames.add(variableName);
+    public boolean addGlobalVariableName(String variableName) {
+        return globalVariableNames.add(variableName);
+    }
+    public boolean addLocalVariableName(String variableName) {
+        return localVariableNames.add(variableName);
     }
     public boolean addClassName(String className) {
         return classNames.add(className);
@@ -67,8 +75,11 @@ public class SourceFile {
     public boolean addParameterNames(List<String> names) {
         return parameterNames.addAll(names);
     }
-    public boolean addVariableNames(List<String> names) {
-        return variableNames.addAll(names);
+    public boolean addGlobalVariableNames(List<String> names) {
+        return globalVariableNames.addAll(names);
+    }
+    public boolean addLocalVariableNames(List<String> names) {
+        return localVariableNames.addAll(names);
     }
     public boolean addClassNames(List<String> names) {
         return classNames.addAll(names);

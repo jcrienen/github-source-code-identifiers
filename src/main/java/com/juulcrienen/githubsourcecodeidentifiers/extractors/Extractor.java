@@ -31,14 +31,19 @@ public class Extractor<T extends SourceFile> {
     }
 
     public void extractAll(T file) throws IOException {
-        extractVariables(file);
+        extractGlobalVariables(file);
+        extractLocalVariables(file);
         extractClassNames(file);
         extractMethodNames(file);
         extractParameters(file);
     }
 
-    public void extractVariables(T file) throws IOException {
-        file.addVariableNames(treeTraversal(Files.readString(file.getFile().toPath()), ExtractionType.GLOBAL_VARIABLES, ExtractionType.LOCAL_VARIABLES));
+    public void extractGlobalVariables(T file) throws IOException {
+        file.addGlobalVariableNames(treeTraversal(Files.readString(file.getFile().toPath()), ExtractionType.GLOBAL_VARIABLES));
+    }
+
+    public void extractLocalVariables(T file) throws IOException {
+        file.addLocalVariableNames(treeTraversal(Files.readString(file.getFile().toPath()), ExtractionType.LOCAL_VARIABLES));
     }
 
     public void extractMethodNames(T file) throws IOException {

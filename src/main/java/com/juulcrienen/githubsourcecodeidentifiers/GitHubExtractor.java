@@ -57,6 +57,9 @@ public class GitHubExtractor {
         Extractor extractor = new Extractor(language);
 
         for (GHRepository repository : repositories) {
+            Path directory = Paths.get(outputFolder + "/" + repository.getOwnerName() + ":" + repository.getName());
+            Files.createDirectories(directory);
+
             List<SourceFile> contents = FileHelper.getFiles(repository, extension).stream().map(x -> new SourceFile(x, extension)).collect(Collectors.toList());
 
             if (contents.isEmpty()) {
@@ -64,17 +67,42 @@ public class GitHubExtractor {
                 return;
             }
 
-            GitHubAPIWrapper.debug("Creating output file");
-            Path file = Paths.get(outputFolder + "/" + repository.getOwnerName() + ":" + repository.getName());
-            Files.deleteIfExists(file);
-            Files.createFile(file);
+            GitHubAPIWrapper.debug("Creating output folders and files...");
+            Path methodNameFile = Paths.get(directory.toAbsolutePath() + "/method_names.txt");
+            Path parameterFile = Paths.get(directory.toAbsolutePath() + "/parameters.txt");
+            Path classNameFile = Paths.get(directory.toAbsolutePath() + "/class_names.txt");
+            Path globalVariableFile = Paths.get(directory.toAbsolutePath() + "/global_variables.txt");
+            Path localVariableFile = Paths.get(directory.toAbsolutePath() + "/local_variables.txt");
+
+            Files.deleteIfExists(methodNameFile);
+            Files.createFile(methodNameFile);
+            Files.deleteIfExists(parameterFile);
+            Files.createFile(parameterFile);
+            Files.deleteIfExists(classNameFile);
+            Files.createFile(classNameFile);
+            Files.deleteIfExists(globalVariableFile);
+            Files.createFile(globalVariableFile);
+            Files.deleteIfExists(localVariableFile);
+            Files.createFile(localVariableFile);
 
             GitHubAPIWrapper.info("Extracting identifiers from " + repository.getName());
 
             for (SourceFile content : contents) {
                 extractor.extractAll(content);
-                for (String identifier : content.getIdentifiers()) {
-                    Files.writeString(file, identifier + System.lineSeparator(), StandardOpenOption.APPEND);
+                for (String identifier : content.getMethodNames()) {
+                    Files.writeString(methodNameFile, identifier + System.lineSeparator(), StandardOpenOption.APPEND);
+                }
+                for (String identifier : content.getClassNames()) {
+                    Files.writeString(classNameFile, identifier + System.lineSeparator(), StandardOpenOption.APPEND);
+                }
+                for (String identifier : content.getGlobalVariableNames()) {
+                    Files.writeString(globalVariableFile, identifier + System.lineSeparator(), StandardOpenOption.APPEND);
+                }
+                for (String identifier : content.getLocalVariableNames()) {
+                    Files.writeString(localVariableFile, identifier + System.lineSeparator(), StandardOpenOption.APPEND);
+                }
+                for (String identifier : content.getParameterNames()) {
+                    Files.writeString(parameterFile, identifier + System.lineSeparator(), StandardOpenOption.APPEND);
                 }
             }
         }
