@@ -13,18 +13,24 @@ public class SourceFile {
     protected List<String> localVariableNames;
     protected List<String> classNames;
 
-    public SourceFile(File file, String extension) {
-        if(!file.getPath().endsWith(extension)) throw new IllegalArgumentException("File does not have " + extension + " extension!");
+    private long language;
+
+    public SourceFile(File file, long language) {
         this.file = file;
         methodNames = new ArrayList<>();
         parameterNames = new ArrayList<>();
         globalVariableNames = new ArrayList<>();
         localVariableNames = new ArrayList<>();
         classNames = new ArrayList<>();
+        this.language = language;
     }
 
     public File getFile() {
         return file;
+    }
+
+    public long getLanguage() {
+        return language;
     }
 
     public List<String> getMethodNames() {

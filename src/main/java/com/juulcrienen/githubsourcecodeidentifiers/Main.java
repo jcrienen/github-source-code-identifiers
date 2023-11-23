@@ -16,7 +16,7 @@ public class Main {
         String inputFilePath;
         String outputFolderPath;
         String libraryInputFilePath;
-        String extension;
+        String[] extension;
         String username;
         String token;
         boolean verbose;
@@ -42,7 +42,7 @@ public class Main {
         Option extensionOption = Option.builder("e")
                 .required(true)
                 .longOpt("extension")
-                .desc("File extension")
+                .desc("File extension(s)")
                 .hasArg(true)
                 .build();
 
@@ -86,7 +86,7 @@ public class Main {
         inputFilePath = commandLine.getOptionValue("input");
         outputFolderPath = commandLine.getOptionValue("output");
         libraryInputFilePath = commandLine.getOptionValue("library");
-        extension = commandLine.getOptionValue("extension");
+        extension = commandLine.getOptionValues("extension");
         username = commandLine.getOptionValue("username");
         token = commandLine.getOptionValue("token");
         verbose = commandLine.hasOption("verbose");

@@ -5,6 +5,7 @@ import com.juulcrienen.githubsourcecodeidentifiers.extractors.LanguageMapper;
 import com.juulcrienen.githubsourcecodeidentifiers.models.SourceFile;
 import com.juulcrienen.githubapiwrapper.GitHubAPIWrapper;
 import com.juulcrienen.githubapiwrapper.helpers.FileHelper;
+import org.apache.commons.io.FilenameUtils;
 import org.kohsuke.github.GHRepository;
 
 import java.io.IOException;
@@ -39,9 +40,7 @@ public class GitHubExtractor {
         System.load(Paths.get(libraryPath).toAbsolutePath().toString());
     }
 
-    public void extractIdentifiers(String inputFile, String outputFolder, String extension) throws Exception {
-        long language = LanguageMapper.getLanguage(extension);
-
+    public void extractIdentifiers(String inputFile, String outputFolder, String... extension) throws Exception {
         GitHubAPIWrapper.info("Reading input file...");
         Set<String> inputRepositories;
         try (Stream<String> lines = Files.lines(Paths.get(inputFile))) {
@@ -54,13 +53,11 @@ public class GitHubExtractor {
 
         List<GHRepository> repositories = wrapper.getGitHubRepositories(inputRepositories);
 
-        Extractor extractor = new Extractor(language);
-
         for (GHRepository repository : repositories) {
             Path directory = Paths.get(outputFolder + "/" + repository.getOwnerName() + ":" + repository.getName());
             Files.createDirectories(directory);
 
-            List<SourceFile> contents = FileHelper.getFiles(repository, extension).stream().map(x -> new SourceFile(x, extension)).collect(Collectors.toList());
+            List<SourceFile> contents = FileHelper.getFiles(repository, extension).stream().map(x -> new SourceFile(x, LanguageMapper.getLanguage(FilenameUtils.getExtension(x.getName())))).collect(Collectors.toList());
 
             if (contents.isEmpty()) {
                 System.out.println("No files found with extension " + extension + " in repository " + repository.getName());
@@ -88,6 +85,7 @@ public class GitHubExtractor {
             GitHubAPIWrapper.info("Extracting identifiers from " + repository.getName());
 
             for (SourceFile content : contents) {
+                Extractor extractor = new Extractor(content.getLanguage());
                 extractor.extractAll(content);
                 for (String identifier : content.getMethodNames()) {
                     Files.writeString(methodNameFile, identifier + System.lineSeparator(), StandardOpenOption.APPEND);
