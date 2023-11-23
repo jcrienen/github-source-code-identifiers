@@ -1,2 +1,0 @@
-jcrienen/github-api-wrapper
-jcrienen/github-source-code-identifiers
