@@ -5,6 +5,7 @@ import ai.serenade.treesitter.Tree;
 import ai.serenade.treesitter.TreeCursor;
 import ai.serenade.treesitter.TreeCursorNode;
 import com.juulcrienen.GitHubSourceCodeIdentifiers.models.SourceFile;
+import com.juulcrienen.githubapiwrapper.GitHubAPIWrapper;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -12,7 +13,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Extractor<T extends SourceFile> {
+public class Extractor<T extends SourceFile> {
     private final Parser fileParser;
     private final long language;
     public Extractor(long language) {

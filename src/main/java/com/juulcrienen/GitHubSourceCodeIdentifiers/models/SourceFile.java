@@ -1,12 +1,12 @@
 package com.juulcrienen.GitHubSourceCodeIdentifiers.models;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class SourceFile {
+public class SourceFile {
 
     private File file;
+
     protected List<String> methodNames;
     protected List<String> parameterNames;
     protected List<String> variableNames;

@@ -11,10 +11,12 @@
 
 `sudo apt install build-essential`
 
-Add `JAVA_HOME` to `~/.bashrc`:
+Add `JAVA_HOME` to `~/.bashrc` (Linux):
 
 `export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 export PATH=$JAVA_HOME/bin:$PATH`
 
+Macos (`~/.zshrc`):
+`export JAVA_HOME=$(/usr/libexec/java_home)`
 
 ### Clone
 
