@@ -8,39 +8,62 @@ import com.juulcrienen.githubapiwrapper.helpers.FileHelper;
 import org.apache.commons.io.FilenameUtils;
 import org.kohsuke.github.GHRepository;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GitHubExtractor {
 
     private GitHubAPIWrapper wrapper;
+    private Properties properties;
 
-    public GitHubExtractor(String libraryPath) throws IOException {
-        this(libraryPath, false);
+    private String classNamesFileName;
+    private String methodNamesFileName;
+    private String parametersFileName;
+    private String localVariablesFileName;
+    private String globalVariablesFileName;
+
+    private String splitSuffix;
+    private boolean split;
+
+
+    public GitHubExtractor(String propertiesFile) throws IOException {
+        this(propertiesFile, false);
     }
 
-    public GitHubExtractor(String libraryPath, boolean verbose) throws IOException {
-        this.wrapper = new GitHubAPIWrapper(verbose);
-        System.load(Paths.get(libraryPath).toAbsolutePath().toString());
+    public GitHubExtractor(String propertiesFile, boolean verbose) throws IOException {
+        this.properties = new Properties();
+        this.properties.load(new FileInputStream(propertiesFile));
+
+        globalVariablesFileName = properties.getProperty("files.global-variables-filename");
+        localVariablesFileName = properties.getProperty("files.local-variables-filename");
+        classNamesFileName = properties.getProperty("files.class-names-filename");
+        methodNamesFileName = properties.getProperty("files.method-names-filename");
+        parametersFileName = properties.getProperty("files.parameters-filename");
+
+        split = Boolean.parseBoolean(properties.getProperty("split.split"));
+        splitSuffix = properties.getProperty("split.suffix");
+
+        String username = properties.getProperty("github.username");
+        String token = properties.getProperty("github.token");
+
+        if(username != null && token != null && !username.isEmpty() && !token.isEmpty()) this.wrapper = new GitHubAPIWrapper(username, token, verbose);
+        else this.wrapper = new GitHubAPIWrapper(verbose);
+
+        System.load(Paths.get(this.properties.getProperty("library-file")).toAbsolutePath().toString());
     }
 
-    public GitHubExtractor(String libraryPath, String username, String token) throws IOException {
-        this(libraryPath, username, token, false);
+    public void extractIdentifiers() throws Exception {
+        extractIdentifiers(properties.getProperty("input-file"), properties.getProperty("output-folder"), properties.getProperty("extensions").split(","));
     }
 
-    public GitHubExtractor(String libraryPath, String username, String token, boolean verbose) throws IOException {
-        this.wrapper = new GitHubAPIWrapper(username, token, verbose);
-        System.load(Paths.get(libraryPath).toAbsolutePath().toString());
-    }
-
-    public void extractIdentifiers(String inputFile, String outputFolder, String... extension) throws Exception {
+    private void extractIdentifiers(String inputFile, String outputFolder, String... extension) throws Exception {
         GitHubAPIWrapper.info("Reading input file...");
         Set<String> inputRepositories;
         try (Stream<String> lines = Files.lines(Paths.get(inputFile))) {
@@ -64,47 +87,54 @@ public class GitHubExtractor {
                 return;
             }
 
-            GitHubAPIWrapper.debug("Creating output folders and files...");
-            Path methodNameFile = Paths.get(directory.toAbsolutePath() + "/method_names.txt");
-            Path parameterFile = Paths.get(directory.toAbsolutePath() + "/parameters.txt");
-            Path classNameFile = Paths.get(directory.toAbsolutePath() + "/class_names.txt");
-            Path globalVariableFile = Paths.get(directory.toAbsolutePath() + "/global_variables.txt");
-            Path localVariableFile = Paths.get(directory.toAbsolutePath() + "/local_variables.txt");
-
-            Files.deleteIfExists(methodNameFile);
-            Files.createFile(methodNameFile);
-            Files.deleteIfExists(parameterFile);
-            Files.createFile(parameterFile);
-            Files.deleteIfExists(classNameFile);
-            Files.createFile(classNameFile);
-            Files.deleteIfExists(globalVariableFile);
-            Files.createFile(globalVariableFile);
-            Files.deleteIfExists(localVariableFile);
-            Files.createFile(localVariableFile);
-
             GitHubAPIWrapper.info("Extracting identifiers from " + repository.getName());
+            writeToFiles(contents, directory);
 
-            for (SourceFile content : contents) {
-                Extractor extractor = new Extractor(content.getLanguage());
-                extractor.extractAll(content);
-                for (String identifier : content.getMethodNames()) {
-                    Files.writeString(methodNameFile, identifier + System.lineSeparator(), StandardOpenOption.APPEND);
-                }
-                for (String identifier : content.getClassNames()) {
-                    Files.writeString(classNameFile, identifier + System.lineSeparator(), StandardOpenOption.APPEND);
-                }
-                for (String identifier : content.getGlobalVariableNames()) {
-                    Files.writeString(globalVariableFile, identifier + System.lineSeparator(), StandardOpenOption.APPEND);
-                }
-                for (String identifier : content.getLocalVariableNames()) {
-                    Files.writeString(localVariableFile, identifier + System.lineSeparator(), StandardOpenOption.APPEND);
-                }
-                for (String identifier : content.getParameterNames()) {
-                    Files.writeString(parameterFile, identifier + System.lineSeparator(), StandardOpenOption.APPEND);
-                }
-            }
         }
         GitHubAPIWrapper.info("Done! Output files can be found in " + Paths.get(outputFolder).toAbsolutePath() + "\n");
+    }
+
+    private void writeToFiles(List<SourceFile> sourceFiles, Path directory) throws IOException {
+        Map<String, Path> paths = createFiles(directory, classNamesFileName, parametersFileName, localVariablesFileName, globalVariablesFileName, methodNamesFileName);
+
+        for (SourceFile content : sourceFiles) {
+            Extractor extractor = new Extractor(content.getLanguage());
+            extractor.extractAll(content);
+
+            writeToFile(content.getClassNames(), paths, classNamesFileName);
+            writeToFile(content.getLocalVariableNames(), paths, localVariablesFileName);
+            writeToFile(content.getGlobalVariableNames(), paths, globalVariablesFileName);
+            writeToFile(content.getMethodNames(), paths, methodNamesFileName);
+            writeToFile(content.getParameterNames(), paths, parametersFileName);
+        }
+    }
+
+    private void writeToFile(List<String> identifiers, Map<String, Path> paths, String fileName) throws IOException {
+        for (String identifier : identifiers) {
+            if(split) {
+                String[] splitIdentifiers = identifier.split(properties.getProperty("split.regex"));
+                for (String splitIdentifier : splitIdentifiers) {
+                    Files.writeString(paths.get(fileName + "_" + splitSuffix), splitIdentifier + System.lineSeparator(), StandardOpenOption.APPEND);
+                }
+            }
+            Files.writeString(paths.get(fileName), identifier + System.lineSeparator(), StandardOpenOption.APPEND);
+        }
+    }
+
+    private Map<String, Path> createFiles(Path directory, String... fileNames) throws IOException {
+        Map<String, Path> paths = new HashMap<>();
+        for (String fileName : fileNames) {
+            paths.put(fileName, createFile(directory, fileName));
+            if(split) paths.put(fileName + "_" + splitSuffix, createFile(directory, fileName + "_" + splitSuffix));
+        }
+        return paths;
+    }
+
+    private Path createFile(Path directory, String fileName) throws IOException {
+        Path file = Paths.get(directory.toAbsolutePath() + "/" + fileName + ".txt");
+        Files.deleteIfExists(file);
+        Files.createFile(file);
+        return file;
     }
 
     public GitHubAPIWrapper getWrapper() {
