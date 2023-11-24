@@ -90,8 +90,8 @@ public class GitHubExtractor {
             List<SourceFile> contents = FileHelper.getFiles(repository, extensionsArray).stream().map(x -> new SourceFile(x, LanguageMapper.getLanguageByExtension(FilenameUtils.getExtension(x.getName()), properties))).collect(Collectors.toList());
 
             if (contents.isEmpty()) {
-                System.out.println("No files found for language " + languages + " in repository " + repository.getName());
-                return;
+                GitHubAPIWrapper.info("No files found for language " + Arrays.toString(languages) + " in repository " + repository.getName());
+                continue;
             }
 
             GitHubAPIWrapper.info("Extracting identifiers from " + repository.getName());
