@@ -33,11 +33,11 @@ public class GitHubExtractor {
     private boolean split;
 
 
-    public GitHubExtractor(String propertiesFile) throws IOException {
+    public GitHubExtractor(String propertiesFile) throws Exception {
         this(propertiesFile, false);
     }
 
-    public GitHubExtractor(String propertiesFile, boolean verbose) throws IOException {
+    public GitHubExtractor(String propertiesFile, boolean verbose) throws Exception {
         this.properties = new Properties();
         this.properties.load(new FileInputStream(propertiesFile));
 

@@ -1,5 +1,6 @@
 package com.juulcrienen.githubsourcecodeidentifiers;
 
+import com.juulcrienen.githubapiwrapper.GitHubAPIWrapper;
 import org.apache.commons.cli.*;
 
 import java.util.logging.Level;
@@ -7,7 +8,7 @@ import java.util.logging.Logger;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Logger logger = Logger.getLogger("GHSCIE");
         logger.setLevel(Level.INFO);
 
@@ -46,9 +47,12 @@ public class Main {
         propertiesFile = commandLine.getOptionValue("properties");
         verbose = commandLine.hasOption("verbose");
 
-        GitHubExtractor extractor = new GitHubExtractor(propertiesFile, verbose);
-
-        extractor.extractIdentifiers();
+        try {
+            GitHubExtractor extractor = new GitHubExtractor(propertiesFile, verbose);
+            extractor.extractIdentifiers();
+        } catch (Exception e) {
+            GitHubAPIWrapper.error(e.getMessage());
+        }
     }
 
 }
