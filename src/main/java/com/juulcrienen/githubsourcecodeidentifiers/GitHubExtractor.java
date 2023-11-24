@@ -60,10 +60,10 @@ public class GitHubExtractor {
     }
 
     public void extractIdentifiers() throws Exception {
-        extractIdentifiers(properties.getProperty("input-file"), properties.getProperty("output-folder"), properties.getProperty("extensions").split(","));
+        extractIdentifiers(properties.getProperty("input-file"), properties.getProperty("output-folder"), properties.getProperty("languages").split(","));
     }
 
-    private void extractIdentifiers(String inputFile, String outputFolder, String... extension) throws Exception {
+    private void extractIdentifiers(String inputFile, String outputFolder, String... languages) throws Exception {
         GitHubAPIWrapper.info("Reading input file...");
         Set<String> inputRepositories;
         try (Stream<String> lines = Files.lines(Paths.get(inputFile))) {
@@ -80,10 +80,17 @@ public class GitHubExtractor {
             Path directory = Paths.get(outputFolder + "/" + repository.getOwnerName() + ":" + repository.getName());
             Files.createDirectories(directory);
 
-            List<SourceFile> contents = FileHelper.getFiles(repository, extension).stream().map(x -> new SourceFile(x, LanguageMapper.getLanguage(FilenameUtils.getExtension(x.getName())))).collect(Collectors.toList());
+            List<String> extensionsList = new ArrayList<>();
+            for (String language : languages) {
+                extensionsList.addAll(LanguageMapper.getExtensions(language, properties));
+            }
+            String[] extensionsArray = new String[extensionsList.size()];
+            extensionsList.toArray(extensionsArray);
+
+            List<SourceFile> contents = FileHelper.getFiles(repository, extensionsArray).stream().map(x -> new SourceFile(x, LanguageMapper.getLanguageByExtension(FilenameUtils.getExtension(x.getName()), properties))).collect(Collectors.toList());
 
             if (contents.isEmpty()) {
-                System.out.println("No files found with extension " + extension + " in repository " + repository.getName());
+                System.out.println("No files found for language " + languages + " in repository " + repository.getName());
                 return;
             }
 
