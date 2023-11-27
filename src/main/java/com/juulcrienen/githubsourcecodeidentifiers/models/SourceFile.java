@@ -5,15 +5,14 @@ import java.util.List;
 
 public class SourceFile {
 
-    private File file;
-
+    private final File file;
     protected List<String> methodNames;
     protected List<String> parameterNames;
     protected List<String> globalVariableNames;
     protected List<String> localVariableNames;
     protected List<String> classNames;
 
-    private long language;
+    private final long language;
 
     public SourceFile(File file, long language) {
         this.file = file;
