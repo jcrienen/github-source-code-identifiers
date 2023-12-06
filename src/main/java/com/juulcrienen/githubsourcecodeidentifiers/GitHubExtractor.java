@@ -8,6 +8,7 @@ import com.juulcrienen.githubapiwrapper.GitHubAPIWrapper;
 import com.juulcrienen.githubapiwrapper.helpers.FileHelper;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.kohsuke.github.GHRepository;
 
 import java.io.File;
@@ -75,12 +76,19 @@ public class GitHubExtractor {
         GitHubAPIWrapper.info("Found " + inputRepositories.size() + " repositories");
 
         GitHubAPIWrapper.debug("Creating output folder");
-        Files.createDirectories(Paths.get(outputFolder));
+        Path dir = Paths.get(outputFolder);
+        Files.createDirectories(dir);
 
-        List<GHRepository> repositories = wrapper.getGitHubRepositories(inputRepositories);
+        for (String repository : inputRepositories) {
+            String[] splitRepository = repository.split("/");
+            String owner = splitRepository[0];
+            String repositoryName = splitRepository[1];
 
-        for (GHRepository repository : repositories) {
-            Path directory = Paths.get(outputFolder + "/" + repository.getOwnerName() + " - " + repository.getName());
+            Path directory = Paths.get(outputFolder + "/" + owner + " - " + repositoryName);
+            if(Files.exists(directory)) {
+                GitHubAPIWrapper.info(repository + " already exists, skipping!");
+                continue;
+            }
             Files.createDirectories(directory);
 
             List<String> extensionsList = new ArrayList<>();
@@ -96,18 +104,25 @@ public class GitHubExtractor {
                     List<SourceFile> sourceFiles = contents.stream().map(x -> new SourceFile(x, LanguageMapper.getLanguageByExtension(FilenameUtils.getExtension(x.getName()), properties))).collect(Collectors.toList());
 
                     if (sourceFiles.isEmpty()) {
-                        GitHubAPIWrapper.info("No files found for language " + Arrays.toString(languages) + " in repository " + repository.getName());
+                        GitHubAPIWrapper.info("No files found for language " + Arrays.toString(languages) + " in repository " + repository);
+                        FileUtils.deleteQuietly(directory.toFile());
                         return;
                     }
 
-                    GitHubAPIWrapper.info("Extracting identifiers from " + repository.getName());
+                    GitHubAPIWrapper.info("Extracting identifiers from " + repository);
                     writeToFiles(sourceFiles, directory);
                 }
             };
 
-            List<File> contents = FileHelper.getFiles(repository, callback, extensionsArray);
+            try {
+                FileHelper.getFilesFromUrl("https://github.com/" + repository, callback, extensionsArray);
+            } catch (GitAPIException e) {
+                GitHubAPIWrapper.error("Error cloning repository " + repository);
+            } catch (IOException e) {
+                GitHubAPIWrapper.error("Error writing files for " + repository);
+            }
         }
-        GitHubAPIWrapper.info("Done! Output files can be found in " + Paths.get(outputFolder).toAbsolutePath() + "\n");
+        GitHubAPIWrapper.info("Done! Output files can be found in " + dir.toAbsolutePath() + "\n");
     }
 
     private void writeToFiles(List<SourceFile> sourceFiles, Path directory) throws IOException {
