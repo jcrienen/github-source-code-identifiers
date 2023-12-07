@@ -79,12 +79,16 @@ public class GitHubExtractor {
         Path dir = Paths.get(outputFolder);
         Files.createDirectories(dir);
 
+        int count = 0;
+        int size = inputRepositories.size();
         for (String repository : inputRepositories) {
+            count++;
             String[] splitRepository = repository.split("/");
             String owner = splitRepository[0];
             String repositoryName = splitRepository[1];
+            String repositoryTopic = splitRepository[2];
 
-            Path directory = Paths.get(outputFolder + "/" + owner + " - " + repositoryName);
+            Path directory = Paths.get(outputFolder + "/" + owner + " - " + repositoryName + " - " + repositoryTopic);
             if(Files.exists(directory)) {
                 GitHubAPIWrapper.info(repository + " already exists, skipping!");
                 continue;
@@ -98,6 +102,7 @@ public class GitHubExtractor {
             String[] extensionsArray = new String[extensionsList.size()];
             extensionsList.toArray(extensionsArray);
 
+            int finalCount = count;
             FileCallback callback = new FileCallback() {
                 @Override
                 public void doTrigger(List<File> contents) throws IOException {
@@ -109,13 +114,13 @@ public class GitHubExtractor {
                         return;
                     }
 
-                    GitHubAPIWrapper.info("Extracting identifiers from " + repository);
+                    GitHubAPIWrapper.info("(" + finalCount + "/" + size + ") Extracting identifiers from " + repository);
                     writeToFiles(sourceFiles, directory);
                 }
             };
 
             try {
-                FileHelper.getFilesFromUrl("https://github.com/" + repository, callback, extensionsArray);
+                FileHelper.getFilesFromUrl("https://github.com/" + owner + "/" + repositoryName, callback, extensionsArray);
             } catch (GitAPIException e) {
                 GitHubAPIWrapper.error("Error cloning repository " + repository);
             } catch (IOException e) {
