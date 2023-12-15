@@ -1,4 +1,8 @@
-outputFolder/
+/outputFolder
+/outputFolder2
+/outputFolder3
+/outputFolder
+/testFolder
 test-input.txt
 libjava-tree-sitter.dylib
 libjava-tree-sitter.so
