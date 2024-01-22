@@ -1,0 +1,11 @@
+id
+number
+amount
+customerId
+id
+name
+pesel
+accounts
+accountService
+customers
+accounts

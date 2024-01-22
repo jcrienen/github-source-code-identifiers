@@ -1,0 +1,17 @@
+tutorials
+tutorialData
+_tutorial
+tutorialData
+_tutorial
+tutorials
+baseDirectory
+mavenWrapperPropertyFile
+url
+mavenWrapperPropertyFileInputStream
+mavenWrapperProperties
+outputFile
+username
+password
+website
+rbc
+fos

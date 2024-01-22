@@ -1,0 +1,17 @@
+ZMusicBukkit
+ZMusicBungee
+ZMusicVelocity
+JarRelocation
+AbstractXmlParser
+DependencyDownloader
+Dependency
+KotlinEnv
+KotlinEnvNoRelocate
+Repository
+ClassAppender
+IO
+VersionChecker
+DependencyVersion
+RuntimeEnv
+IsolatedClassLoader
+ZMusicRuntime

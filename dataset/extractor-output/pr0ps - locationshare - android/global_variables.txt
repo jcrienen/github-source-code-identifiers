@@ -1,0 +1,7 @@
+TAG
+locManager
+lastLocation
+binding
+sharedPrefs
+locListener
+requestPermissionLauncher

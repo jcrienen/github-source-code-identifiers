@@ -1,0 +1,10 @@
+brokerUrl
+id
+name
+color
+creationDate
+updateDate
+originalColor
+deleted
+repository
+jmsTemplate

@@ -1,0 +1,14 @@
+AwesomeExceptionHandler
+AutoWasDeletedException
+ThereIsNoSuchAutoException
+JMSConfig
+SecurityConfig
+OpenApiConfig
+Automobile
+AutomobileRepository
+Application
+JMSPublisher
+AutomobileResource
+AutomobileRestController
+AutomobileOpenApi
+Consumer

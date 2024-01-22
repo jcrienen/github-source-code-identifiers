@@ -1,0 +1,4 @@
+ResourceIndexTask
+SignGUI
+Builder
+ExamplePlugin

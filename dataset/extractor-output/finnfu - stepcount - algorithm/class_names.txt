@@ -1,0 +1,11 @@
+ExampleUnitTest
+MainActivity
+StepService
+StepBinder
+GrayInnerService
+UpdateUiCallBack
+StepCountListener
+StepValuePassListener
+StepDetector
+StepCount
+ApplicationTest

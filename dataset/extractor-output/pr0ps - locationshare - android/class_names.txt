@@ -1,0 +1,5 @@
+MainActivity
+onClickShareListener
+onClickCopyListener
+SettingsActivity
+SettingsFragment

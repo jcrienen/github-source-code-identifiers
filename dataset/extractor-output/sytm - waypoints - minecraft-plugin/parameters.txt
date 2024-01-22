@@ -1,0 +1,16 @@
+plugin
+player
+onClose
+color
+lines
+event
+json
+plugin
+player
+onClose
+color
+lines
+sender
+command
+label
+args

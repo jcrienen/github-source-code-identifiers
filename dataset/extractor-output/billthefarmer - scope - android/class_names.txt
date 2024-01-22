@@ -1,0 +1,17 @@
+FreqScale
+SettingsActivity
+Unit
+Scope
+AboutPreference
+XScale
+YScale
+Spectrum
+SpectrumActivity
+Audio
+HelpActivity
+Scale
+Main
+GestureListener
+ScaleListener
+Audio
+SettingsFragment

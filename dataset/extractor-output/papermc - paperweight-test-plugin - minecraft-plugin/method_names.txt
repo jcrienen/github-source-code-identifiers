@@ -1,0 +1,7 @@
+execute
+tabComplete
+getPlugin
+command
+onEnable
+registerPluginBrigadierCommand
+onCommandRegistered

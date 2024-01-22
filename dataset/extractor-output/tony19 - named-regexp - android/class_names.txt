@@ -1,0 +1,7 @@
+PatternTest
+MatcherTest
+PatternSerializationTest
+MatchResult
+GroupInfo
+Matcher
+Pattern

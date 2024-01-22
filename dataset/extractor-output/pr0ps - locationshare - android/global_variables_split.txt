@@ -1,0 +1,13 @@
+TAG
+loc
+Manager
+last
+Location
+binding
+shared
+Prefs
+loc
+Listener
+request
+Permission
+Launcher

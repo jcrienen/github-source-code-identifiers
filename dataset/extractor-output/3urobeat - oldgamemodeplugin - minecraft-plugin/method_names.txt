@@ -1,0 +1,6 @@
+onEnable
+onCommand
+oginfoCommand
+gamemodeCommand
+handleGameModeChange
+onTabComplete

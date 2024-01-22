@@ -1,0 +1,14 @@
+testGetZipCodeWhenNotReady
+testSetup
+testGetZipCodeThatDoesntExist
+tesGetCorrectZipCode
+listAdressesFromOrigin
+get
+getByZipcode
+main
+close
+getStatus
+getByZipcode
+saveServiceStatus
+setupOnStartup
+setup

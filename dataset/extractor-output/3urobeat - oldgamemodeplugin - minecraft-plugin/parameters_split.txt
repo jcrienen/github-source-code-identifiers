@@ -1,0 +1,17 @@
+sender
+cmd
+label
+args
+sender
+args
+sender
+cmd
+args
+targetplayer
+sender
+gamemodestr
+gamemode
+sender
+cmd
+label
+args
