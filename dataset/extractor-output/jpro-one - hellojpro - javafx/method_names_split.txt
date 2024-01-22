@@ -1,0 +1,9 @@
+start
+main
+initialize
+init
+Logo
+Animation
+init
+start
+main

@@ -1,0 +1,13 @@
+plugin
+name
+command
+sender
+commandLabel
+args
+sender
+alias
+args
+location
+label
+command
+event

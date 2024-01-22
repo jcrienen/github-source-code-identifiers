@@ -1,0 +1,16 @@
+MapBasedServiceConfigurationTest
+ServiceEvaluatorUtilsTest
+TestUtil
+JsonUtilsTest
+RestAdapter
+JsonUtils
+ServiceEvaluatorUtils
+ServiceLoader
+MapBasedServiceConfiguration
+ServiceAdapterRequestTest
+ServiceAdapterExceptionTest
+TestAssertionUtils
+ServiceAdapter
+ServiceAdapterException
+ServiceAdapterResponse
+ServiceAdapterRequest

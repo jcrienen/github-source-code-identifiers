@@ -1,0 +1,7 @@
+platform
+Label
+root
+logo
+jpro
+Application
+pt

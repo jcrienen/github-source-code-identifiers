@@ -1,0 +1,12 @@
+keypad
+fingers
+weight
+location
+num
+weight
+winning
+Rate
+heavy
+Player
+Win
+Number

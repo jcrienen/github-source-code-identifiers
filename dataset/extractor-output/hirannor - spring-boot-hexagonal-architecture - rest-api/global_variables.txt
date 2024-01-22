@@ -1,0 +1,10 @@
+productService
+productId
+name
+description
+productRepository
+productMap
+productId
+name
+description
+productPersistencePort

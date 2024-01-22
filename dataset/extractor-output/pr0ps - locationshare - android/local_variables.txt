@@ -1,0 +1,17 @@
+locationEnabled
+waitingForLocation
+haveLocation
+newline
+intentSettingsActivity
+linkChoice
+linkChoice
+uri
+intent
+intent
+clipboard
+clip
+permission
+accuracy
+val
+val
+binding

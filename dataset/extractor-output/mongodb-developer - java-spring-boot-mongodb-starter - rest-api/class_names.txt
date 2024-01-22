@@ -1,0 +1,12 @@
+TestHelper
+PersonControllerIT
+ApplicationStarter
+MongoDBConfiguration
+PersonEntity
+CarEntity
+AddressEntity
+MongoDBPersonRepository
+PersonRepository
+PersonServiceImpl
+PersonService
+PersonController

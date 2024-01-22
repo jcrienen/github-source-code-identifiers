@@ -1,0 +1,14 @@
+Main
+Activity
+on
+Click
+Share
+Listener
+on
+Click
+Copy
+Listener
+Settings
+Activity
+Settings
+Fragment

@@ -1,0 +1,14 @@
+JavaFXPluginSmokeTestGradle76
+JavaFXPluginSmokeTest
+JavaFXPluginSmokeTestGradle83
+JavaFXPluginSmokeTestGradle61
+JavaFXModuleTest
+JavaFXPluginSmokeTestGradle69
+JavaFXComponentMetadataRule
+JavaFXOptions
+JavaFXPlugin
+Main
+Main
+Main
+Main
+Main

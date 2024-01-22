@@ -1,0 +1,8 @@
+keypad
+fingers
+weight
+location
+num
+weight
+winningRate
+heavyPlayerWinNumber

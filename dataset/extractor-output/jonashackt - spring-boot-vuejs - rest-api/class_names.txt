@@ -1,0 +1,10 @@
+UserRepositoryTest
+SpaRedirectTest
+BackendControllerTest
+UserRepository
+UserNotFoundException
+User
+SpaRedirectFilterConfiguration
+WebSecurityConfiguration
+SpringBootVuejsApplication
+BackendController

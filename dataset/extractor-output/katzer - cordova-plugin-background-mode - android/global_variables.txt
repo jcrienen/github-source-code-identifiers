@@ -1,0 +1,14 @@
+wakeLock
+NOTIFICATION_ID
+NOTIFICATION_TITLE
+NOTIFICATION_TEXT
+NOTIFICATION_ICON
+binder
+wakeLock
+JS_NAMESPACE
+inBackground
+isDisabled
+isBind
+defaultSettings
+service
+connection

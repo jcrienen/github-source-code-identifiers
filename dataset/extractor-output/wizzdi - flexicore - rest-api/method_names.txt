@@ -1,0 +1,12 @@
+manualEntityHolder
+migrate
+getClassNames
+setClassNames
+migrate
+migrate
+migrate
+flywayObjectHolder
+migrate
+migrate
+main
+commandLineRunner

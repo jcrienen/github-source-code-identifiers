@@ -1,0 +1,17 @@
+ConfigTests
+ICommand
+ListCommand
+Discord
+MessageListener
+MinecraftMessageConfig
+ListCommandConfig
+BotConfig
+DiscordMessageConfig
+BaseConfig
+Config
+DeathMessage
+YepListener
+AdvancementMessage
+IYepMessage
+StringTemplate
+VelocityDiscord

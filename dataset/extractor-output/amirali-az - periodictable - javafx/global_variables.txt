@@ -1,0 +1,16 @@
+instance
+tableCreator
+core
+element
+blockMouseClick
+scaleTransition
+durationProperty
+owner
+element
+path
+gridPane
+isWideLayout
+creatingTable
+name
+path
+osName

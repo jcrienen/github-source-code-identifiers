@@ -1,0 +1,4 @@
+MainActivity
+SettingsActivity
+AboutPreference
+SettingsFragment

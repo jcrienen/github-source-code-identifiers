@@ -1,0 +1,14 @@
+ProductControllerImpl
+ProductController
+ProductRepository
+SpringDataJpaAdapterConfiguration
+ProductEntity
+ProductSpringJpaAdapter
+InMemoryAdapterConfiguration
+ProductInMemoryAdapter
+ProductPersistencePort
+Product
+HexagonalDemoApplicationLauncher
+ApplicationConfiguration
+ProductServiceAdapter
+ProductService

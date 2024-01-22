@@ -1,0 +1,15 @@
+on
+Enable
+on
+Command
+oginfo
+Command
+gamemode
+Command
+handle
+Game
+Mode
+Change
+on
+Tab
+Complete

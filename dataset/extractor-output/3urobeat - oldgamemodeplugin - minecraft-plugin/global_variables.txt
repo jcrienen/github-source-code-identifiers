@@ -1,0 +1,3 @@
+supportedversion
+pluginversion
+targetselectors

@@ -1,0 +1,15 @@
+execute
+tab
+Complete
+get
+Plugin
+command
+on
+Enable
+register
+Plugin
+Brigadier
+Command
+on
+Command
+Registered

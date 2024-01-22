@@ -1,0 +1,17 @@
+PlayerInjector_v1_20
+LogFilter
+ConsoleMessages
+AntiPopup
+CommandRegister
+PlayerListener
+ViaHook
+ServerDataRemapper
+ChatListener
+PacketEventsListener
+VersionUtil
+Api
+AbstractInjector
+PlayerInjector_v1_19_2
+PlayerInjector_v1_20_2
+PlayerInjector_v1_19_3
+PlayerInjector_v1_19_4

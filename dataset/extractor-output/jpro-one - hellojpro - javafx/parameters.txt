@@ -1,0 +1,9 @@
+stage
+args
+location
+resources
+logo
+jproApplication
+stage
+e
+args

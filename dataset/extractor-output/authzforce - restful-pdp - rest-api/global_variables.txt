@@ -1,0 +1,15 @@
+PRNG
+ENDPOINT_ADDRESS
+MAX_JSON_STRING_LENGTH
+MAX_JSON_CHILDREN_COUNT
+MAX_JSON_DEPTH
+server
+xmlPdpEngineAdapter
+jsonPdpEngineAdapter
+engine
+xacmlJaxbIoAdapter
+xacmlJsonIoAdapter
+MAX_JSON_STRING_LENGTH
+MAX_JSON_CHILDREN_COUNT
+MAX_JSON_DEPTH
+port

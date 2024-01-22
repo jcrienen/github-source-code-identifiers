@@ -1,0 +1,10 @@
+ManualEntityProvider
+V6__DE_ForeignKey
+FlywayObjectHolder
+V5__CharVarLengthIncreaser
+V7__FileResourceMigration
+V3__DE_ForeignKey
+FlywayConfiguration
+V4__CharVarLengthIncreaser
+V2__CharVarLengthIncreaser
+FlexiCoreApplication

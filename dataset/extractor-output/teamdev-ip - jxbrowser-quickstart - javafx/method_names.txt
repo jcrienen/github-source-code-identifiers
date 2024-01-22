@@ -1,0 +1,11 @@
+start
+main
+main
+main
+windowClosing
+start
+main
+start
+main
+main
+windowClosing

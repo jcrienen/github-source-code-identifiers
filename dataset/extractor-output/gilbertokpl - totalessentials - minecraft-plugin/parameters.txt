@@ -1,0 +1,11 @@
+e
+ignored
+urlDownload
+path
+e
+ClassPath
+jarFilePath
+newManifest
+e
+owner
+repo

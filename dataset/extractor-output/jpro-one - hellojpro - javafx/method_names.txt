@@ -1,0 +1,7 @@
+start
+main
+initialize
+initLogoAnimation
+init
+start
+main

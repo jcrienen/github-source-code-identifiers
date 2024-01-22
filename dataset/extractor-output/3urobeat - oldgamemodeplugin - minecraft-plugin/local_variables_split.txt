@@ -1,0 +1,10 @@
+p
+p
+targetplayer
+thisplayer
+p
+p
+p
+sendername
+gamemodes
+players

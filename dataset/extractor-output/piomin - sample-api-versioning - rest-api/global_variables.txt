@@ -1,0 +1,12 @@
+restTemplate
+restTemplate
+persons
+mapper
+repository
+mapper
+repository
+id
+name
+gender
+age
+birthDate
