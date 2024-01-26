@@ -28,7 +28,7 @@ def main():
     split = True if configuration.config["split.split"].data == "true" else False
 
     import repository
-    output_folder = "analysis_3d"
+    output_folder = "analysis_2d"
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
@@ -57,7 +57,7 @@ def main():
     print("Loaded " + str(len(repositories.data)) + " repositories with " + str(number_of_topics) + " total topics!")
 
     queries = []
-    with open("queries.txt", "r") as f:
+    with open("dataset/queries.txt", "r") as f:
         for line in f:
             line = line.strip()
             queries.append(line)
@@ -73,7 +73,7 @@ def main():
 
         vectorizer = TfidfVectorizer(min_df=2, max_df=0.50)
         bow = vectorizer.fit_transform(data[analysis_type])
-        
+
         # LSA
         lsa = TruncatedSVD(n_components=number_of_topics)
         lsa_matrix = lsa.fit_transform(bow)
@@ -81,7 +81,7 @@ def main():
         lsa_target_percentages = np.amax(lsa_matrix, axis=1).tolist()
 
         # TSNE perplexity 20 orig
-        tsne = TSNE(n_components=3, perplexity=25, learning_rate=100, n_iter=2000, random_state=0, angle=0.75)
+        tsne = TSNE(n_components=2, perplexity=25, learning_rate=100, n_iter=2000, random_state=0, angle=0.75)
         tsne_mat = tsne.fit_transform(lsa_matrix)
 
         # Cosine similarity
@@ -117,21 +117,21 @@ def main():
         fig = plt.figure(layout="constrained")
         fig.set_size_inches((18.5, 10.5), forward=False)
         gs = GridSpec(1, 2, figure=fig)
-        ax1 = fig.add_subplot(gs[0, 0], projection='3d')
-        ax2 = fig.add_subplot(gs[0, 1], projection='3d')
+        ax1 = fig.add_subplot(gs[0, 0])
+        ax2 = fig.add_subplot(gs[0, 1])
 
         # Plot
         colors = ListedColormap(sns.color_palette("hls", number_of_topics))
         lookup_table, color_target = np.unique(target, return_inverse=True)
-        ax1.scatter(xs=tsne_mat[:, 0], ys=tsne_mat[:, 1], zs=tsne_mat[:, 2], c=color_target, cmap=colors)
+        ax1.scatter(x=tsne_mat[:, 0], y=tsne_mat[:, 1], c=color_target, cmap=colors)
         ax1.set_title("t-SNE with manual labels")
 
         # Plot axes 2
-        ax2.scatter(xs=tsne_mat[:, 0], ys=tsne_mat[:, 1], zs=tsne_mat[:, 2], c=lsa_target, cmap=colors)
+        ax2.scatter(x=tsne_mat[:, 0], y=tsne_mat[:, 1], c=lsa_target, cmap=colors)
         ax2.set_title("t-SNE with LSA labels")
 
         # Export
-        path = os.path.join(output_folder, folder_name + '/t-SNE Plot.png')
+        path = os.path.join(output_folder, folder_name + '/t-SNE Plot 2D.png')
         plt.savefig(path, dpi=200)
         plt.close(fig)
 

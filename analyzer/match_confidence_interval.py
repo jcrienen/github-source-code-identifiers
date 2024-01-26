@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-df = pd.read_csv('analysis_3d/results.csv')
+df = pd.read_csv('dataset/analysis-output/results.csv')
 stats = df.groupby(['Type'])['Score eval'].agg(['mean', 'count', 'std'])
 confidence = []
 
@@ -16,7 +16,7 @@ for i in stats.index:
 stats['confidence'] = confidence
 
 print(stats)
-stats.to_csv('analysis_3d/repository_match_stats.csv')
+stats.to_csv('dataset/analysis-output/repository_match_stats.csv')
 
 names_split = [" ".join(x.split("_")).capitalize() for x in list(stats.index.values)[1::2]]
 names_non_split = [" ".join(x.split("_")).capitalize() for x in list(stats.index.values)[::2]]
@@ -27,11 +27,11 @@ non_split = stats['mean'][::2]
 confidence_split = stats['confidence'][1::2]
 confidence_non_split = stats['confidence'][::2]
 
-barWidth = 0.3
+barWidth = 0.4
 r1 = np.arange(len(non_split))
 r2 = [x + barWidth for x in r1]
 f = plt.figure()
-f.set_figwidth(12)
+f.set_figwidth(9)
 f.set_figheight(4)
 plt.bar(r1, non_split, width = barWidth, color = 'black', edgecolor = 'black', yerr=confidence_non_split, capsize=7, alpha=0.5, label="Non-split")
 plt.bar(r2, split, width = barWidth, color = 'gray', edgecolor = 'black', yerr=confidence_split, capsize=7,alpha=0.5, label="Split")
@@ -44,6 +44,6 @@ plt.legend()
 
 # Show graphic
 plt.title("Confidence intervals for finding a similar project")
-path = os.path.join('analysis_3d', 'repository_match_stats.png')
+path = os.path.join('dataset/analysis-output', 'repository_match_stats.png')
 plt.savefig(path)
 plt.show()
